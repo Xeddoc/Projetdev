@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Objets Connectés:  Fichier source de MyDeepSleep.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_ynov_campus_aix_rvb.jpg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Objets Connectés
+   </div>
+   <div id="projectbrief">Outils de développement d&#39;objets connectés</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">MyDeepSleep.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_my_deep_sleep_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#define NB_TRYWIFI      20 // Nombre maximum de tentatives de connextion WiFi</span></div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#define DURATION_SLEEP  5 // Durée de la période de sommeil</span></div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div><div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="_my_deep_sleep_8h.html#a76d8759ee792df79e50888562cb18e0e">   60</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="_my_deep_sleep_8h.html#a76d8759ee792df79e50888562cb18e0e">setupDeepSleep</a>(){</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordtype">int</span> iNbTry = 0;</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  WiFi.mode(WIFI_STA);</div><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  WiFi.begin(ssid, password);</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordflow">while</span> (WiFi.status() != WL_CONNECTED) {</div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    MYDEBUG_PRINT(<span class="stringliteral">&quot;.&quot;</span>);</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">if</span> (iNbTry++ &gt;= NB_TRYWIFI) {</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      MYDEBUG_PRINTLN(<span class="stringliteral">&quot;Impossible de se connecter au WiFi, je vais faire la sieste !&quot;</span>);</div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      ESP.deepSleep(DURATION_SLEEP * 1000000, RF_CAL);  <span class="comment">// Durée en millisecondes</span></div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    delay(500);</div><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  }</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  MYDEBUG_PRINTLN(<span class="stringliteral">&quot; WiFi connected&quot;</span>);</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  MYDEBUG_PRINT(<span class="stringliteral">&quot;IP address: &quot;</span>);</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  MYDEBUG_PRINTLN(WiFi.localIP());</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div><div class="ttc" id="_my_deep_sleep_8h_html_a76d8759ee792df79e50888562cb18e0e"><div class="ttname"><a href="_my_deep_sleep_8h.html#a76d8759ee792df79e50888562cb18e0e">setupDeepSleep</a></div><div class="ttdeci">void setupDeepSleep()</div><div class="ttdef"><b>Definition:</b> MyDeepSleep.h:60</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>

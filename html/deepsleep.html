@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Objets Connectés: Deep Sleep</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_ynov_campus_aix_rvb.jpg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Objets Connectés
+   </div>
+   <div id="projectbrief">Outils de développement d&#39;objets connectés</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.14 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Deep Sleep </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>Optimisation de la consommation électrique</p>
+<p>Nous allons chercher à économiser l'énergie et ainsi prolonger la durée de vie de la batterie d'un objet connecté.</p>
+<p>L'ESP8266 dispose d'un mode "Deep Sleep" qui permet de le mettre dans différents modes de veille.</p><ul>
+<li>Modem-Sleep : Ce mode est utilisé si votre objet utilise le processeur (PWM ou I2S) mais ne requiert pas de communication continue. Le modem Wi-Fi est arrêté tout en maintenant quand même une connexion Wi-Fi sans transmission de données, juste pour optimiser la consommation d’énergie. Il existe 3 modes : DTIM1 à 3. Par exemple dans le mode DTIM3, le modem est mis en sommeil durant 300 ms puis activé durant 3 ms pour maintenir la connexion. Ce mode de fonctionnement est conforme à la norme 802.11 (U-APSD).</li>
+<li>Light-Sleep : En plus de la suspension du modem WiFI, le CPU est mis en attente et réactivé si nécessaire.</li>
+<li>Deep-Sleep : Le mode le plus simple à mettre en oeuvre et le plus économe en énergie pour des projets qui fonctionnent sur batterie.</li>
+</ul>
+<p>L'ESP8266 peut être réveillé :</p><ul>
+<li>A intervalle régulier pour faire des mesures et les publier,</li>
+<li>A l'aide de la broche Reset(RST) relié à un bouton,</li>
+<li>En utilisant le signal d'un capteur (détecteur de mouvement - PIR), par exemple.</li>
+</ul>
+<p>Cablage Le mode Deep-sleep est activé en reliant la broche RST à la broche Wake (D0 d'un NodeMCU). A noter donc que cette broche n’est donc plus disponible pour un autre usage.</p>
+<p>Point d'attention Une fois que les broches D0 et RST sont reliées, il n’est plus possible de téléverser un programme. Il faut alors déconnecter la broche RST avant de pouvoir téléverser un programme. Le mieux est de prévoir un jumper. La connexion WiFi étant arrêté, voir ne pourrez plus accéder à une interface WEB de configuration. Il faudra prévoir une condition dans votre programme pour désactiver le mode deep-sleep.</p>
+<p>Code Pour endormir notre ESP8266, nous utilisons : ESP.deepsleep(durée, Le mode du WiFi au redémarrage);</p><ul>
+<li>Durée : La durée de mise en veille en microsecondes. Si on souhaite réveiller l'ESP8266 manuellement ou avec une action extérieure, par exemple un interrupteur relié sur la broche RST, il suffit d’indiquer un temps nul (0).</li>
+<li>Mode du WiFi au réveil :<ul>
+<li>RF_DEFAULT, qui est équivalent est RF_CAL. Le modem WiFi est activé normalement à son réveil.</li>
+<li>RF_NO_CAL (NO CALibration) est une version alternative moins consommatrice en énergie. Le modem WiFi est activé mais sans qu’aucun étalonnage du signal radio soit effectué.</li>
+<li>RF_DISABLED si vous n’avez pas besoin de la connexion WiFi on peut garder le modem WiFi en veille. Attention, si ce mode est activé, il devient impossible de se connecter au réseau WiFi. Quand il se réveille, l'ESP8266 redémarre comme lorsqu'il est allumé. Le code est donc exécuté depuis le début. Ce n'est pas un mode veille qui vous permet de récupérer un contexte, on redémarre depuis le setup().</li>
+</ul>
+</li>
+</ul>
+<p>Documentation officielle : <a href="https://www.espressif.com/sites/default/files/9b-esp8266-low_power_solutions_en_0.pdf">https://www.espressif.com/sites/default/files/9b-esp8266-low_power_solutions_en_0.pdf</a></p>
+<p>Fichier <a class="el" href="_my_deep_sleep_8h.html">MyDeepSleep.h</a> </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
+</body>
+</html>
